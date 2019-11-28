@@ -7,18 +7,43 @@ admin.site.register(Genre)
 # admin.site.register(BookInstance)
 admin.site.register(Language)
 
+class BookInline(admin.StackedInline):
+    model = Book
+    extra = 0
+
 class AuthorAdmin(admin.ModelAdmin):
+    # white list
     list_display = ('last_name', 'first_name',
                     'date_of_birth', 'date_of_death')
+    # tuple leads to horizontal display, else verticle
+    fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+    # can also use exclude = to black list
+    inlines = [BookInline]
 
 admin.site.register(Author,AuthorAdmin)
 
-# alternative way to create and assign ModelAdmin
+# provides inline editing of associated records, StackedInline give verticle layout
+class BooksInstanceInline(admin.TabularInline):
+    model = BookInstance
+
+# alternative way with declaration to create and assign ModelAdmin
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
+    inlines = [BooksInstanceInline]
 
 @admin.register(BookInstance)
 class BookAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
+    # provides sectioning in the detail view, None equals no section title
+    fieldsets = (
+        (None, {
+            'fields': ('book', 'imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back')
+        }),
+    )
+    list_display = ['book', 'status', 'due_back', 'id']
+
 

@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+{% block title %}Author Details{% endblock %}
+{% block content %}
+  <h1>Author Details</h1>
+  <p><strong>Author Name:</strong> {{ author.last_name }}, {{ author.first_name }}</p>
+  <p><strong>Date Of Birth:</strong> {{ author.date_of_birth|default_if_none:"Not Stored" }}</p>
+  <p><strong>Date Of Death:</strong> {{ author.date_of_death|default_if_none:"Not Stored" }}</p>
+  {% with books=author.book_set.all %}
+    {% if books %}
+      <h4>Books By Author</h4>
+      {% for book in books %}
+        <hr>
+        <p><strong>Title:</strong> <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+          ({{ book.bookinstance_set.all.count }})</p>
+        <p><strong>Summary:</strong> {{ book.summary }}</p>
+      {% endfor %}
+    {% else %}
+      <p>No books in library for this author</p>
+    {% endif %}
+  {% endwith %}
+{% endblock %}
