@@ -45,7 +45,7 @@ class BookInstance(models.Model):
                           help_text='Unique ID for this particular book across whole library')
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
-    due_back = models.DateField(null=True, blank=True)
+    due_back = models.DateField(null=True, blank=True, )
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL,
                                  null=True, blank=True)
 
@@ -98,7 +98,7 @@ class Author(models.Model):
 class Language(models.Model):
     """Model representing the language a book is in"""
     name = models.CharField(max_length=100,
-                            help_text="Enter the book's natural language (e.g. English")
+                            help_text="Enter the book's natural language (e.g. English)")
 
     def __str__(self):
         return self.name

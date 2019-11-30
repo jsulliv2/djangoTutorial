@@ -17,7 +17,7 @@ class AuthorAdmin(admin.ModelAdmin):
     # white list
     list_display = ('last_name', 'first_name',
                     'date_of_birth', 'date_of_death')
-    # tuple leads to horizontal display, else verticle
+    # tuple leads to horizontal display, else vertical
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
     # can also use exclude = to black list
     inlines = [BookInline]
@@ -26,7 +26,7 @@ class AuthorAdmin(admin.ModelAdmin):
 admin.site.register(Author, AuthorAdmin)
 
 
-# provides inline editing of associated records, StackedInline give verticle layout
+# provides inline editing of associated records, StackedInline give vertical layout
 class BooksInstanceInline(admin.TabularInline):
     model = BookInstance
 

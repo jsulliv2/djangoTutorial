@@ -56,7 +56,7 @@ def renew_book_librarian(request, pk):
             return HttpResponseRedirect(reverse('all-borrowed'))
     else:
         proposed_renewal_date = date.today() + timedelta(weeks=3)
-        form = RenewBookForm(initial={'due_back': proposed_renewal_date})
+        form = RenewBookModelForm(initial={'due_back': proposed_renewal_date})
     context = {
         'form': form,
         'book_instance': book_instance
