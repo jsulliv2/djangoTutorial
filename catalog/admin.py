@@ -33,7 +33,7 @@ class BookAdmin(admin.ModelAdmin):
     inlines = [BooksInstanceInline]
 
 @admin.register(BookInstance)
-class BookAdmin(admin.ModelAdmin):
+class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
     # provides sectioning in the detail view, None equals no section title
     fieldsets = (
@@ -41,9 +41,14 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('book', 'imprint', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )
-    list_display = ['book', 'status', 'due_back', 'id']
+    list_display = ['book', 'status', 'borrower', 'due_back', 'id']
+    actions = ['markReturned', 'markMaint']
 
+    def markReturned(self, request, queryset):
+        queryset.update(status='a')
 
+    def markMaint(self, request, queryset):
+        queryset.update(status='m')
