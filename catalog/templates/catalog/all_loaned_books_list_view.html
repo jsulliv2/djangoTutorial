@@ -1,4 +1,11 @@
 {% extends "base_generic.html" %}
+{% block css %}
+  <style type="text/css">
+  td{
+    padding-right:3px;
+  }
+  </style>
+{% endblock %}
 
 {% block content %}
   <h1>All Borrowed Books</h1>
@@ -13,11 +20,14 @@
       </thead>
       {% for bookinst in bookinstance_list %}
         <tr>
-          <td style="{% if bookinst.is_overdue %} color:text-danger;{% endif %}">
+          <td class="{% if bookinst.is_overdue %} table-danger{% endif %}">
               <a href="{% url 'book-detail'  bookinst.book.pk%}">{{ bookinst.book.title }}</a>
           </td>
             <td>{{ bookinst.borrower|default_if_none:'Not Known' }}</td>
             <td>{{ bookinst.due_back }}</td>
+            {% if perms.catalog.can_mark_returned %}
+              <td><a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a></td>
+            {% endif %}
         </tr>
       {% endfor %}
     </table>

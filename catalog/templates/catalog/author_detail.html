@@ -5,6 +5,13 @@
   <p><strong>Author Name:</strong> {{ author.last_name }}, {{ author.first_name }}</p>
   <p><strong>Date Of Birth:</strong> {{ author.date_of_birth|default_if_none:"Not Stored" }}</p>
   <p><strong>Date Of Death:</strong> {{ author.date_of_death|default_if_none:"Not Stored" }}</p>
+  {% if perms.catalog.can_mark_returned %}
+    <p>
+      <strong>Author Actions:</strong><br>
+      <a href="{% url 'author_update' author.id %}">Update Author</a><br>
+      <a href="{% url 'author_delete' author.id %}">Delete Author</a>
+    </p>
+  {% endif %}
   {% with books=author.book_set.all %}
     {% if books %}
       <h4>Books By Author</h4>

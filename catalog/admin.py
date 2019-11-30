@@ -7,9 +7,11 @@ admin.site.register(Genre)
 # admin.site.register(BookInstance)
 admin.site.register(Language)
 
+
 class BookInline(admin.StackedInline):
     model = Book
     extra = 0
+
 
 class AuthorAdmin(admin.ModelAdmin):
     # white list
@@ -20,17 +22,21 @@ class AuthorAdmin(admin.ModelAdmin):
     # can also use exclude = to black list
     inlines = [BookInline]
 
-admin.site.register(Author,AuthorAdmin)
+
+admin.site.register(Author, AuthorAdmin)
+
 
 # provides inline editing of associated records, StackedInline give verticle layout
 class BooksInstanceInline(admin.TabularInline):
     model = BookInstance
+
 
 # alternative way with declaration to create and assign ModelAdmin
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
     inlines = [BooksInstanceInline]
+
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
@@ -47,8 +53,10 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ['book', 'status', 'borrower', 'due_back', 'id']
     actions = ['markReturned', 'markMaint']
 
-    def markReturned(self, request, queryset):
+    @staticmethod
+    def markReturned(request, queryset):
         queryset.update(status='a')
 
-    def markMaint(self, request, queryset):
+    @staticmethod
+    def markMaint(request, queryset):
         queryset.update(status='m')
