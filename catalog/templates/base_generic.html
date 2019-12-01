@@ -3,19 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   {% block head %}{% endblock %}
   {% block js %}{% endblock %}
   {% block css %}{% endblock %}
   {% load static %}
-  <link rel="stylesheet" href="{% static '/static/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <title>{% block title %} Local Library {% endblock %}</title>
 </head>
 <body>
-  <div class="container-fluid" style="margin-top: 20px;">
+  <div id="page-body" class="container-fluid" style="margin-top: 20px;">
+    <div class="row">
+      <div class="card-img">
+        <img src="{% static 'images/LESC-PAGE-HEADER.png' %}">
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-2">
         {% block sidebar %}
