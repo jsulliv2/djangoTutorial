@@ -107,7 +107,6 @@ class AllLoanedBooksListView(PermissionRequiredMixin, generic.ListView):
     template_name = 'catalog/all_loaned_books_list_view.html'
 
     def get_queryset(self):
-        # import pdb; pdb.set_trace()
         return BookInstance.objects\
             .filter(status__exact='o')\
             .order_by('due_back', 'borrower', 'book')
